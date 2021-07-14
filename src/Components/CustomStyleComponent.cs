@@ -26,6 +26,11 @@ namespace Nop.Plugin.Admin.StyleEditor.Components
         /// <returns>Returns the view of the widget</returns>
         public IViewComponentResult Invoke()
         {
+            if (_settings.DisableCustomStyles)
+            {
+                return Content("");
+            }
+
             var styles = _settings.CustomStyles;
 
             return View("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", styles);
