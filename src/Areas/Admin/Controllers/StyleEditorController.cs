@@ -102,6 +102,55 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             return await Configure();
         }
 
+        /// <summary>
+        /// Gets the page showing the configuration options for the plugin
+        /// </summary>
+        /// <returns>Returns the configuration page</returns>
+        public virtual async Task<IActionResult> EditStyles()
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            {
+                return AccessDeniedView();
+            }
+
+            var model = new ConfigurationModel
+            {
+                DisableCustomStyles = _settings.DisableCustomStyles,
+                CustomStyles = _settings.CustomStyles
+            };
+
+            return View("~/Plugins/Admin.StyleEditor/Areas/Admin/Views/StyleEditor.cshtml", model);
+        }
+
+        /// <summary>
+        /// Updates the configuration settings for the plugin
+        /// </summary>
+        /// <param name="model">The updated settings</param>
+        /// <returns>Returns the configuration page</returns>
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public virtual async Task<IActionResult> EditStyles(ConfigurationModel model)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            {
+                return AccessDeniedView();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"));
+                return await Configure();
+            }
+
+            _settings.DisableCustomStyles = model.DisableCustomStyles;
+            _settings.CustomStyles = model.CustomStyles;
+            await _settingService.SaveSettingAsync(_settings);
+
+            _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.StylesUpdated"));
+
+            return await EditStyles();
+        }
+
         #endregion
     }
 }

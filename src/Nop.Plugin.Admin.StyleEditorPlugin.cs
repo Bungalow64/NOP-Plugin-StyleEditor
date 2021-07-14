@@ -78,6 +78,9 @@ namespace Nop.Plugin.Admin.StyleEditor
 
             await _localizationService.AddLocaleResourceAsync(new Dictionary<string, string>
             {
+                ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style Editor",
+                ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
+                ["Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"] = "The styles could not be saved",
                 ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
@@ -99,6 +102,18 @@ namespace Nop.Plugin.Admin.StyleEditor
         public override async Task UpdateAsync(string currentVersion, string targetVersion)
         {
             await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
+
+            await _localizationService.AddLocaleResourceAsync(new Dictionary<string, string>
+            {
+                ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style Editor",
+                ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
+                ["Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"] = "The styles could not be saved",
+                ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
+                ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
+                ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
+                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom styles",
+                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS"
+            });
 
             await base.UpdateAsync(currentVersion, targetVersion);
         }
