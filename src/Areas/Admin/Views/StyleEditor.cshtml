@@ -3,7 +3,7 @@
 @{
     Layout = "_AdminLayout";
     ViewBag.PageTitle = T("Plugins.Admin.StyleEditor.EditorTitle").Text;
-    Html.SetActiveMenuItemSystemName("Log");
+    Html.SetActiveMenuItemSystemName("StyleEditor");
 }
 
 <form asp-controller="StyleEditor" asp-action="EditStyles" method="post">
@@ -39,7 +39,7 @@
                             <div class="col-md-10 offset-md-2">
                                 <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
                                 <div class="float-right">
-                                    <button type="button" name="format" class="btn btn-secondary" onclick="doFormat()">@T("Plugins.Admin.StyleEditor.Configuration.FormatStyles")</button>
+                                    <button type="button" name="format" class="btn btn-success" onclick="doFormat()">@T("Plugins.Admin.StyleEditor.Configuration.FormatStyles")</button>
                                 </div>
                             </div>
                         </div>
