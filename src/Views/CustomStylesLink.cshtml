@@ -1,5 +1,5 @@
 ﻿@model string
 
 @{
-    Html.AppendInlineScriptParts(ResourceLocation.Head, $"<link href=\"{Model}\" rel=\"stylesheet\">");
+    Html.AddInlineScriptParts(ResourceLocation.Head, $"<link href=\"{Model}\" rel=\"stylesheet\">");
 }

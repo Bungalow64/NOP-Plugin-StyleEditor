@@ -1,5 +1,5 @@
 ﻿@model string
 
 @{
-    Html.AppendInlineScriptParts(ResourceLocation.Head, $"<style>{Model}</style>");
+    Html.AddInlineScriptParts(ResourceLocation.Head, $"<style>{Model}</style>");
 }
