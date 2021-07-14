@@ -19,5 +19,11 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models
         /// </summary>
         [NopResourceDisplayName("Plugins.Admin.StyleEditor.Configuration.CustomStyles")]
         public string CustomStyles { get; set; }
+
+        /// <summary>
+        /// The type of rendering of the styles (inline, file, etc.)
+        /// </summary>
+        [NopResourceDisplayName("Plugins.Admin.StyleEditor.Configuration.RenderType")]
+        public int RenderType { get; set; }
     }
 }

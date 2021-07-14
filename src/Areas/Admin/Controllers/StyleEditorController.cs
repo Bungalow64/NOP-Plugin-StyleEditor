@@ -76,7 +76,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             var model = new ConfigurationModel
             {
                 DisableCustomStyles = _settings.DisableCustomStyles,
-                CustomStyles = _settings.CustomStyles
+                CustomStyles = _settings.CustomStyles,
+                RenderType = _settings.RenderType
             };
 
             return View("~/Plugins/Admin.StyleEditor/Areas/Admin/Views/StyleEditor.cshtml", model);
@@ -104,6 +105,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
 
             _settings.DisableCustomStyles = model.DisableCustomStyles;
             _settings.CustomStyles = model.CustomStyles;
+            _settings.RenderType = model.RenderType;
             await _settingService.SaveSettingAsync(_settings);
 
             _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.StylesUpdated"));

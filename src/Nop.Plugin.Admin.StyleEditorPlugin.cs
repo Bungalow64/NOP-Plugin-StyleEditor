@@ -93,7 +93,13 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
                 ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom styles",
-                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS"
+                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS",
+                ["Plugins.Admin.StyleEditor.Configuration.RenderType"] = "Style loading type",
+                ["Plugins.Admin.StyleEditor.Configuration.RenderType.Hint"] = "How the styles should be loaded in the browser.  Inline is recommended if you only have a small number of custom styles.",
+                ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
+                ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
+                ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However this file is cached in the browser, so a visitor will only request this once."
             });
 
             await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
@@ -120,7 +126,13 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
                 ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom styles",
-                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS"
+                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS",
+                ["Plugins.Admin.StyleEditor.Configuration.RenderType"] = "Style loading type",
+                ["Plugins.Admin.StyleEditor.Configuration.RenderType.Hint"] = "How the styles should be loaded in the browser.  Inline is recommended if you only have a small number of custom styles.",
+                ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
+                ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
+                ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However this file is cached in the browser, so a visitor will only request this once."
             });
 
             await base.UpdateAsync(currentVersion, targetVersion);

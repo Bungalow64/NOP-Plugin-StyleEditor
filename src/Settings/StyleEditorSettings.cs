@@ -16,5 +16,10 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         /// Gets or sets the custom styles
         /// </summary>
         public virtual string CustomStyles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the render type
+        /// </summary>
+        public virtual int RenderType { get; set; }
     }
 }

@@ -37,10 +37,40 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-10 offset-md-2">
-                                <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
                                 <div class="float-right">
                                     <button type="button" name="format" class="btn btn-success" onclick="doFormat()">@T("Plugins.Admin.StyleEditor.Configuration.FormatStyles")</button>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                <nop-label asp-for="RenderType" />
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="RenderType" id="RenderType_Inline" value="1" @(Model.RenderType != 2 ? Html.Raw("checked") : null)>
+                                    <label class="form-check-label" for="RenderType_Inline">
+                                        @T("Plugins.Admin.StyleEditor.Configuration.Inline")
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="RenderType" id="RenderType_File" value="2" @(Model.RenderType == 2 ? Html.Raw("checked") : null)>
+                                    <label class="form-check-label" for="RenderType_File">
+                                        @T("Plugins.Admin.StyleEditor.Configuration.File")
+                                    </label>
+                                </div>
+                                <div class="card text-white bg-info">
+                                    <div class="card-body">
+                                        @T("Plugins.Admin.StyleEditor.Configuration.Inline.Hint")
+                                        <br /><br />
+                                        @T("Plugins.Admin.StyleEditor.Configuration.File.Hint")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-10 offset-md-2">
+                                <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
                             </div>
                         </div>
                     </div>
