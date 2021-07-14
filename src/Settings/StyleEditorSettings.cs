@@ -1,4 +1,6 @@
-﻿using Nop.Core.Configuration;
+﻿using System.Globalization;
+using Nop.Core.Configuration;
+using Nop.Plugin.Admin.StyleEditor.Helpers;
 
 namespace Nop.Plugin.Admin.StyleEditor.Settings
 {
@@ -21,5 +23,25 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         /// Gets or sets the render type
         /// </summary>
         public virtual int RenderType { get; set; }
+
+        /// <summary>
+        /// The current version of the styles
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Updates the version
+        /// </summary>
+        /// <param name="currentDateTimeHelper"></param>
+        public StyleEditorSettings UpdateVersion(ICurrentDateTimeHelper currentDateTimeHelper)
+        {
+            Version = currentDateTimeHelper.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
+            return this;
+        }
+
+        /// <summary>
+        /// Gets the path to the custom styles, including version
+        /// </summary>
+        public string CustomStylesPath => $"/CustomStyle?v={Version}";
     }
 }

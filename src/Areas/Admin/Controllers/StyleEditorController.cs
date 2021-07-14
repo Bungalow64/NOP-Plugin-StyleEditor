@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models;
+using Nop.Plugin.Admin.StyleEditor.Helpers;
 using Nop.Plugin.Admin.StyleEditor.Settings;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -22,6 +23,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly ISettingService _settingService;
         private readonly StyleEditorSettings _settings;
+        private readonly ICurrentDateTimeHelper _currentDateTimeHelper;
 
         #endregion
 
@@ -35,18 +37,21 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         /// <param name="localizationService"></param>
         /// <param name="settingService"></param>
         /// <param name="settings"></param>
+        /// <param name="currentDateTimeHelper"></param>
         public StyleEditorController(
             IPermissionService permissionService,
             INotificationService notificationService,
             ILocalizationService localizationService,
             ISettingService settingService,
-            StyleEditorSettings settings)
+            StyleEditorSettings settings,
+            ICurrentDateTimeHelper currentDateTimeHelper)
         {
             _permissionService = permissionService;
             _notificationService = notificationService;
             _localizationService = localizationService;
             _settingService = settingService;
             _settings = settings;
+            _currentDateTimeHelper = currentDateTimeHelper;
         }
 
         #endregion
@@ -106,6 +111,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             _settings.DisableCustomStyles = model.DisableCustomStyles;
             _settings.CustomStyles = model.CustomStyles;
             _settings.RenderType = model.RenderType;
+            _settings.UpdateVersion(_currentDateTimeHelper);
+
             await _settingService.SaveSettingAsync(_settings);
 
             _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.StylesUpdated"));
