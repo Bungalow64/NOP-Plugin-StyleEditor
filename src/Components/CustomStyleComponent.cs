@@ -31,9 +31,16 @@ namespace Nop.Plugin.Admin.StyleEditor.Components
                 return Content("");
             }
 
-            var styles = _settings.CustomStyles;
+            if (_settings.RenderType == 2)
+            {
+                return View("~/Plugins/Admin.StyleEditor/Views/CustomStylesLink.cshtml", "/CustomStyle?v=1");
+            }
+            else
+            {
+                var styles = _settings.CustomStyles;
 
-            return View("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", styles);
+                return View("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", styles);
+            }
         }
     }
 }
