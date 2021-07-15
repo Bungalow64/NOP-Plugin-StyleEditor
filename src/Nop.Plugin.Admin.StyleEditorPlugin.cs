@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Routing;
 using Nop.Core;
 using Nop.Core.Domain.Cms;
 using Nop.Plugin.Admin.StyleEditor.Settings;
@@ -13,7 +10,8 @@ using Nop.Services.Plugins;
 using Nop.Services.Security;
 using Nop.Web.Framework.Infrastructure;
 using Nop.Web.Framework.Menu;
-using Task = System.Threading.Tasks.Task;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nop.Plugin.Admin.StyleEditor
 {
@@ -77,14 +75,14 @@ namespace Nop.Plugin.Admin.StyleEditor
         /// Install the plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public override async Task InstallAsync()
+        public override void Install()
         {
-            await _settingService.SaveSettingAsync(new StyleEditorSettings
+             _settingService.SaveSetting(new StyleEditorSettings
             {
                 DisableCustomStyles = false
             });
 
-            await _localizationService.AddLocaleResourceAsync(new Dictionary<string, string>
+             _localizationService.AddPluginLocaleResource(new Dictionary<string, string>
             {
                 ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style editor",
                 ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
@@ -106,35 +104,35 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.Asynchronous.Hint"] = "Loads the custom styles in a way that doesn't block the rest of the page from rendering.  As a result, there might be a brief moment after the page loads before the custom styles are applied.  Only applies to the file loading type."
             });
 
-            await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
+            AddPlugin(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
 
-            await base.InstallAsync();
+            base.Install();
         }
 
         /// <summary>
         /// Uninstall the plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public override async Task UninstallAsync()
+        public override void Uninstall()
         {
-            await _settingService.DeleteSettingAsync<StyleEditorSettings>();
+            _settingService.DeleteSetting<StyleEditorSettings>();
 
-            await _localizationService.DeleteLocaleResourcesAsync("Plugins.Admin.StyleEditor");
+            _localizationService.DeletePluginLocaleResources("Plugins.Admin.StyleEditor");
 
-            await RemovePluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
+            RemovePlugin(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
 
-            await base.UninstallAsync();
+            base.Uninstall();
         }
 
         /// <summary>
         /// Gets the list of widget zones
         /// </summary>
         /// <returns></returns>
-        public Task<IList<string>> GetWidgetZonesAsync()
+        public IList<string> GetWidgetZones()
         {
-            return Task.FromResult<IList<string>>(new List<string> {
+            return new List<string> {
                 PublicWidgetZones.BodyEndHtmlTagBefore
-            });
+            };
         }
 
         /// <summary>
@@ -156,9 +154,9 @@ namespace Nop.Plugin.Admin.StyleEditor
         /// </summary>
         /// <param name="rootNode"></param>
         /// <returns></returns>
-        public async Task ManageSiteMapAsync(SiteMapNode rootNode)
+        public void ManageSiteMap(SiteMapNode rootNode)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManagePlugins))
             {
                 return;
             }
@@ -166,12 +164,12 @@ namespace Nop.Plugin.Admin.StyleEditor
             var menuItem = new SiteMapNode
             {
                 SystemName = "StyleEditor",
-                Title = await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.EditorTitle"),
+                Title = _localizationService.GetResource("Plugins.Admin.StyleEditor.EditorTitle"),
                 ControllerName = "StyleEditor",
                 ActionName = "EditStyles",
                 Visible = true,
                 RouteValues = new RouteValueDictionary() { { "area", "Admin" } },
-                IconClass = "far fa-dot-circle"
+                IconClass = "fa fa-dot-circle-o"
             };
 
             var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Configuration");
@@ -185,21 +183,21 @@ namespace Nop.Plugin.Admin.StyleEditor
             }
         }
 
-        private async Task AddPluginAsync(string name)
+        private void AddPlugin(string name)
         {
             if (!_widgetSettings.ActiveWidgetSystemNames.Contains(name))
             {
                 _widgetSettings.ActiveWidgetSystemNames.Add(name);
-                await _settingService.SaveSettingAsync(_widgetSettings);
+                _settingService.SaveSetting(_widgetSettings);
             }
         }
 
-        private async Task RemovePluginAsync(string name)
+        private void RemovePlugin(string name)
         {
             if (_widgetSettings.ActiveWidgetSystemNames.Contains(name))
             {
                 _widgetSettings.ActiveWidgetSystemNames.Remove(name);
-                await _settingService.SaveSettingAsync(_widgetSettings);
+                _settingService.SaveSetting(_widgetSettings);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models;
 using Nop.Plugin.Admin.StyleEditor.Helpers;
 using Nop.Plugin.Admin.StyleEditor.Settings;
@@ -8,6 +7,7 @@ using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Web.Areas.Admin.Controllers;
+using System.Threading.Tasks;
 
 namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
 {
@@ -73,7 +73,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         /// <returns>Returns the configuration page</returns>
         public virtual async Task<IActionResult> EditStyles()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManagePlugins))
             {
                 return AccessDeniedView();
             }
@@ -98,14 +98,14 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         [AutoValidateAntiforgeryToken]
         public virtual async Task<IActionResult> EditStyles(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManagePlugins))
             {
                 return AccessDeniedView();
             }
 
             if (!ModelState.IsValid)
             {
-                _notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"));
+                _notificationService.ErrorNotification(_localizationService.GetResource("Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"));
                 return await Configure();
             }
 
@@ -115,9 +115,9 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             _settings.UseAsync = model.UseAsync;
             _settings.UpdateVersion(_currentDateTimeHelper);
 
-            await _settingService.SaveSettingAsync(_settings);
+            _settingService.SaveSetting(_settings);
 
-            _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Plugins.Admin.StyleEditor.StylesUpdated"));
+            _notificationService.SuccessNotification(_localizationService.GetResource("Plugins.Admin.StyleEditor.StylesUpdated"));
 
             return await EditStyles();
         }

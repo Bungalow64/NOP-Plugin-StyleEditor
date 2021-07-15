@@ -6,7 +6,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models
     /// <summary>
     /// The model containing the configuration settings for the plugin
     /// </summary>
-    public partial record ConfigurationModel : BaseNopModel
+    public partial class ConfigurationModel : BaseNopModel
     {
         /// <summary>
         /// Whether the custom styles should be disabled

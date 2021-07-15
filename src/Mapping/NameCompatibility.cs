@@ -10,9 +10,9 @@ namespace Nop.Plugin.Admin.StyleEditor.Mapping
     public partial class NameCompatibility : INameCompatibility
     {
         /// <inheritdoc/>
-        public Dictionary<Type, string> TableNames => new();
+        public Dictionary<Type, string> TableNames => new Dictionary<Type, string>();
 
         /// <inheritdoc/>
-        public Dictionary<(Type, string), string> ColumnName => new();
+        public Dictionary<(Type, string), string> ColumnName => new Dictionary<(Type, string), string>();
     }
 }
