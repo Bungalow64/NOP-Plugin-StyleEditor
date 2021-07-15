@@ -18,3 +18,14 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-css.min.js"></script>
+
+<script>
+    function doFormat() {
+        var styles = $('#CustomStyles');
+        var contents = styles.val();
+        var formatted = css_beautify(contents);
+        styles.val(formatted);
+    }
+</script>
