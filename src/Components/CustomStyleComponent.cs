@@ -33,7 +33,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Components
 
             if (_settings.RenderType == 2)
             {
-                return View("~/Plugins/Admin.StyleEditor/Views/CustomStylesLink.cshtml", _settings.CustomStylesPath);
+                var template = _settings.UseAsync ? "CustomStylesAsync" : "CustomStylesLink";
+                return View($"~/Plugins/Admin.StyleEditor/Views/{template}.cshtml", _settings.CustomStylesPath);
             }
             else
             {
