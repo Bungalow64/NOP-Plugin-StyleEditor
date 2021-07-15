@@ -1,0 +1,49 @@
+﻿@model Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models.ConfigurationModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewBag.PageTitle = T("Plugins.Admin.StyleEditor.EditorTitle").Text;
+    Html.SetActiveMenuItemSystemName("StyleEditor");
+
+    const string hideStylesBlockAttributeName = "StyleEditorPage.HideStylesBlock";
+    var hideStylesBlock = genericAttributeService.GetAttribute<bool>(workContext.CurrentCustomer, hideStylesBlockAttributeName);
+
+    const string hideConfigBlockAttributeName = "StyleEditorPage.HideConfigBlock";
+    var hideConfigBlock = genericAttributeService.GetAttribute<bool>(workContext.CurrentCustomer, hideConfigBlockAttributeName);
+}
+
+<form asp-controller="StyleEditor" asp-action="EditStyles" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            @T("Plugins.Admin.StyleEditor.EditorTitle")
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn btn-primary">
+                <i class="fa fa-floppy-o"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <nop-panels id="style-cards">
+                <nop-panel asp-name="styleEditor-styles"
+                           asp-icon="fa fa-tint"
+                           asp-title="@T("Plugins.Admin.StyleEditor.Configuration.Styles")"
+                           asp-hide-block-attribute-name="@hideStylesBlockAttributeName"
+                           asp-hide="@hideStylesBlock"
+                           asp-advanced="false">
+                    @await Html.PartialAsync("_StyleEditor.Styles", Model)
+                </nop-panel>
+                <nop-panel asp-name="styleEditor-config"
+                           asp-icon="fa fa-cogs"
+                           asp-title="@T("Plugins.Admin.StyleEditor.Configuration.Config")"
+                           asp-hide-block-attribute-name="@hideConfigBlockAttributeName"
+                           asp-hide="@hideConfigBlock"
+                           asp-advanced="false">
+                    @await Html.PartialAsync("_StyleEditor.Config", Model)
+                </nop-panel>
+            </nop-panels>
+        </div>
+    </div>
+</form>

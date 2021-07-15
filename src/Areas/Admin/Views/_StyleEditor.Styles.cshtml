@@ -1,0 +1,31 @@
+﻿@model Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models.ConfigurationModel
+
+<div class="panel-body">
+    <div class="form-group">
+        <div class="col-md-2">
+            <nop-label asp-for="CustomStyles" />
+        </div>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.CustomStyles, 20, 0, new { Style = "width:100%" })
+            @Html.ValidationMessageFor(model => model.CustomStyles)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <div class="pull-right">
+                <button type="button" name="format" class="btn btn-success" onclick="doFormat()">@T("Plugins.Admin.StyleEditor.Configuration.FormatStyles")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-css.min.js"></script>
+
+<script>
+    function doFormat() {
+        var styles = $('#CustomStyles');
+        var contents = styles.val();
+        var formatted = css_beautify(contents);
+        styles.val(formatted);
+    }
+</script>
