@@ -168,7 +168,7 @@ namespace Nop.Plugin.Admin.StyleEditor
         public Task<IList<string>> GetWidgetZonesAsync()
         {
             return Task.FromResult<IList<string>>(new List<string> {
-                PublicWidgetZones.Footer
+                PublicWidgetZones.BodyEndHtmlTagBefore
             });
         }
 
@@ -181,7 +181,7 @@ namespace Nop.Plugin.Admin.StyleEditor
         {
             return widgetZone switch
             {
-                var _ when widgetZone.Equals(PublicWidgetZones.Footer) => StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES,
+                var _ when widgetZone.Equals(PublicWidgetZones.BodyEndHtmlTagBefore) => StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES,
                 _ => string.Empty,
             };
         }
