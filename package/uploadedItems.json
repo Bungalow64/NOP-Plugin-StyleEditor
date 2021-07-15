@@ -1,6 +1,12 @@
 [
   {
     "Type": "Plugin",
+    "SupportedVersion": "4.30",
+    "DirectoryPath": "4.30/Admin.StyleEditor/",
+    "SystemName": "Admin.StyleEditor"
+  },
+  {
+    "Type": "Plugin",
     "SupportedVersion": "4.40",
     "DirectoryPath": "4.40/Admin.StyleEditor/",
     "SystemName": "Admin.StyleEditor"
