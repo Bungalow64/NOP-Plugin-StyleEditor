@@ -26,22 +26,14 @@ namespace Nop.Plugin.Admin.StyleEditor.Components
         /// <returns>Returns the view of the widget</returns>
         public IViewComponentResult Invoke()
         {
-            if (_settings.DisableCustomStyles)
+            var (view, model) = _settings.GenerateView();
+
+            if (view is null)
             {
                 return Content("");
             }
 
-            if (_settings.RenderType == 2)
-            {
-                var template = _settings.UseAsync ? "CustomStylesAsync" : "CustomStylesLink";
-                return View($"~/Plugins/Admin.StyleEditor/Views/{template}.cshtml", _settings.CustomStylesPath);
-            }
-            else
-            {
-                var styles = _settings.CustomStyles;
-
-                return View("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", styles);
-            }
+            return View(view, model);
         }
     }
 }

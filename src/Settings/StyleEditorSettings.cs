@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Nop.Core.Configuration;
 using Nop.Plugin.Admin.StyleEditor.Helpers;
 
@@ -40,6 +41,11 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         /// <param name="currentDateTimeHelper"></param>
         public virtual StyleEditorSettings UpdateVersion(ICurrentDateTimeHelper currentDateTimeHelper)
         {
+            if (currentDateTimeHelper is null)
+            {
+                throw new ArgumentNullException(nameof(currentDateTimeHelper));
+            }
+
             Version = currentDateTimeHelper.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
             return this;
         }
@@ -48,5 +54,27 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         /// Gets the path to the custom styles, including version
         /// </summary>
         public virtual string CustomStylesPath => $"/CustomStyle?v={Version}";
+
+        /// <summary>
+        /// Gets the view details for the component
+        /// </summary>
+        /// <returns></returns>
+        public virtual (string view, object model) GenerateView()
+        {
+            if (DisableCustomStyles || string.IsNullOrWhiteSpace(CustomStyles) || string.IsNullOrWhiteSpace(CustomStyles.Replace(Environment.NewLine, "")))
+            {
+                return (null, null);
+            }
+
+            if (RenderType == 2)
+            {
+                var template = UseAsync ? "CustomStylesAsync" : "CustomStylesLink";
+                return ($"~/Plugins/Admin.StyleEditor/Views/{template}.cshtml", CustomStylesPath);
+            }
+            else
+            {
+                return ("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", CustomStyles);
+            }
+        }
     }
 }
