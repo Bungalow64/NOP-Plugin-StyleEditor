@@ -22,7 +22,7 @@ variables:
   pluginFolder: 'Nop.Plugin.Admin.StyleEditor'
   pluginSystemName: 'Admin.StyleEditor'
   githubProjectName: 'NOP-Plugin-StyleEditor'
-  build_4_30: false
+  build_4_30: true
 
 pool:
  vmImage: 'ubuntu-latest'

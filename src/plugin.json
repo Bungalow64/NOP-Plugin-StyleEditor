@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Admin",
+  "FriendlyName": "Style Editor",
+  "SystemName": "Admin.StyleEditor",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.40" ],
+  "Author": "Bungalow64 Technologies",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Admin.StyleEditor.dll",
+  "Description": "This plugin allows administrators to edit user interface styles using CSS"
+}
