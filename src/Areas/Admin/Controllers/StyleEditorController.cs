@@ -82,7 +82,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             {
                 DisableCustomStyles = _settings.DisableCustomStyles,
                 CustomStyles = _settings.CustomStyles,
-                RenderType = _settings.RenderType
+                RenderType = _settings.RenderType,
+                UseAsync = _settings.UseAsync
             };
 
             return View("~/Plugins/Admin.StyleEditor/Areas/Admin/Views/StyleEditor.cshtml", model);
@@ -111,6 +112,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             _settings.DisableCustomStyles = model.DisableCustomStyles;
             _settings.CustomStyles = model.CustomStyles;
             _settings.RenderType = model.RenderType;
+            _settings.UseAsync = model.UseAsync;
             _settings.UpdateVersion(_currentDateTimeHelper);
 
             await _settingService.SaveSettingAsync(_settings);

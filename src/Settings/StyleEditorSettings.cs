@@ -25,15 +25,20 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         public virtual int RenderType { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the file should be loaded asynchronously
+        /// </summary>
+        public virtual bool UseAsync { get; set; }
+
+        /// <summary>
         /// The current version of the styles
         /// </summary>
-        public string Version { get; set; }
+        public virtual string Version { get; set; }
 
         /// <summary>
         /// Updates the version
         /// </summary>
         /// <param name="currentDateTimeHelper"></param>
-        public StyleEditorSettings UpdateVersion(ICurrentDateTimeHelper currentDateTimeHelper)
+        public virtual StyleEditorSettings UpdateVersion(ICurrentDateTimeHelper currentDateTimeHelper)
         {
             Version = currentDateTimeHelper.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
             return this;
@@ -42,6 +47,6 @@ namespace Nop.Plugin.Admin.StyleEditor.Settings
         /// <summary>
         /// Gets the path to the custom styles, including version
         /// </summary>
-        public string CustomStylesPath => $"/CustomStyle?v={Version}";
+        public virtual string CustomStylesPath => $"/CustomStyle?v={Version}";
     }
 }

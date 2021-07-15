@@ -25,5 +25,11 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Models
         /// </summary>
         [NopResourceDisplayName("Plugins.Admin.StyleEditor.Configuration.RenderType")]
         public int RenderType { get; set; }
+
+        /// <summary>
+        /// Whether the file should be loaded asynchronously
+        /// </summary>
+        [NopResourceDisplayName("Plugins.Admin.StyleEditor.Configuration.Asynchronous")]
+        public bool UseAsync { get; set; }
     }
 }

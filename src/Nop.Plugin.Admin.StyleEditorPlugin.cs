@@ -101,7 +101,9 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
                 ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
                 ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
-                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once."
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once.",
+                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous"] = "Load asynchronously (files only)",
+                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous.Hint"] = "Loads the custom styles in a way that doesn't block the rest of the page from rendering.  As a result, there might be a brief moment after the page loads before the custom styles are applied.  Only applies to the file loading type."
             });
 
             await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
@@ -136,7 +138,9 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
                 ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
                 ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
-                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once."
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once.",
+                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous"] = "Load asynchronously (files only)",
+                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous.Hint"] = "Loads the custom styles in a way that doesn't block the rest of the page from rendering.  As a result, there might be a brief moment after the page loads before the custom styles are applied.  Only applies to the file loading type."
             });
 
             await base.UpdateAsync(currentVersion, targetVersion);
