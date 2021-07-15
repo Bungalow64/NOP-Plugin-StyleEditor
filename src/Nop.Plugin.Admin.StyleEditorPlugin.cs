@@ -88,6 +88,8 @@ namespace Nop.Plugin.Admin.StyleEditor
             {
                 ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style editor",
                 ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
+                ["Plugins.Admin.StyleEditor.Configuration.Styles"] = "Custom styles",
+                ["Plugins.Admin.StyleEditor.Configuration.Config"] = "Configuration",
                 ["Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"] = "The styles could not be saved",
                 ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
@@ -99,7 +101,7 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
                 ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
                 ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
-                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However this file is cached in the browser, so a visitor will only request this once."
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once."
             });
 
             await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
@@ -121,6 +123,8 @@ namespace Nop.Plugin.Admin.StyleEditor
             {
                 ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style editor",
                 ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
+                ["Plugins.Admin.StyleEditor.Configuration.Styles"] = "Custom styles",
+                ["Plugins.Admin.StyleEditor.Configuration.Config"] = "Configuration",
                 ["Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"] = "The styles could not be saved",
                 ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
@@ -132,7 +136,7 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
                 ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
                 ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
-                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However this file is cached in the browser, so a visitor will only request this once."
+                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once."
             });
 
             await base.UpdateAsync(currentVersion, targetVersion);

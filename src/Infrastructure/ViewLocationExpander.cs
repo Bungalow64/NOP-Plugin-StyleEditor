@@ -27,7 +27,10 @@ namespace Nop.Plugin.Admin.StyleEditor.Infrastructure
         {
             if (context.AreaName == "Admin")
             {
-                viewLocations = new[] { $"/Plugins/Nop.Plugin.Admin.StyleEditor/Areas/Admin/Views/{context.ControllerName}/{context.ViewName}.cshtml" }.Concat(viewLocations);
+                viewLocations = new[] { 
+                    $"/Plugins/Admin.StyleEditor/Areas/Admin/Views/{context.ControllerName}/{context.ViewName}.cshtml",
+                    $"/Plugins/Admin.StyleEditor/Areas/Admin/Views/{context.ViewName}.cshtml"
+                }.Concat(viewLocations);
             }
             else
             {

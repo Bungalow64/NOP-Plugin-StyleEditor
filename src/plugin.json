@@ -2,7 +2,7 @@
   "Group": "Admin",
   "FriendlyName": "Style Editor",
   "SystemName": "Admin.StyleEditor",
-  "Version": "1.08",
+  "Version": "1.09",
   "SupportedVersions": [ "4.40" ],
   "Author": "Bungalow64 Technologies",
   "DisplayOrder": 1,
