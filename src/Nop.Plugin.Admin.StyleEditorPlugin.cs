@@ -112,41 +112,6 @@ namespace Nop.Plugin.Admin.StyleEditor
         }
 
         /// <summary>
-        /// Updates the plugin
-        /// </summary>
-        /// <param name="currentVersion"></param>
-        /// <param name="targetVersion"></param>
-        /// <returns></returns>
-        public override async Task UpdateAsync(string currentVersion, string targetVersion)
-        {
-            await AddPluginAsync(StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES);
-
-            await _localizationService.AddLocaleResourceAsync(new Dictionary<string, string>
-            {
-                ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style editor",
-                ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
-                ["Plugins.Admin.StyleEditor.Configuration.Styles"] = "Custom styles",
-                ["Plugins.Admin.StyleEditor.Configuration.Config"] = "Configuration",
-                ["Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"] = "The styles could not be saved",
-                ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
-                ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
-                ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
-                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom styles",
-                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS",
-                ["Plugins.Admin.StyleEditor.Configuration.RenderType"] = "Style loading type",
-                ["Plugins.Admin.StyleEditor.Configuration.RenderType.Hint"] = "How the styles should be loaded in the browser.  Inline is recommended if you only have a small number of custom styles.",
-                ["Plugins.Admin.StyleEditor.Configuration.Inline"] = "Inline",
-                ["Plugins.Admin.StyleEditor.Configuration.Inline.Hint"] = "Loading the styles inline includes the custom styles within the page itself.  Best for when you only have a small number of custom styles, since it doesn't require an extra HTTP request, but does slightly increase the size of the pages being returned to visitors",
-                ["Plugins.Admin.StyleEditor.Configuration.File"] = "File",
-                ["Plugins.Admin.StyleEditor.Configuration.File.Hint"] = "Loading the styles via a file is how most stylesheets are loaded, but requires the browser to make an extra request to your site to get it.  However, this file is cached in the browser, so each visitor will only request this once.",
-                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous"] = "Load asynchronously (files only)",
-                ["Plugins.Admin.StyleEditor.Configuration.Asynchronous.Hint"] = "Loads the custom styles in a way that doesn't block the rest of the page from rendering.  As a result, there might be a brief moment after the page loads before the custom styles are applied.  Only applies to the file loading type."
-            });
-
-            await base.UpdateAsync(currentVersion, targetVersion);
-        }
-
-        /// <summary>
         /// Uninstall the plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
