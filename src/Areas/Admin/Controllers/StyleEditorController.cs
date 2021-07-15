@@ -7,7 +7,6 @@ using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Web.Areas.Admin.Controllers;
-using System.Threading.Tasks;
 
 namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
 {
@@ -62,16 +61,16 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         /// Redirects to the page showing the configuration options for the plugin
         /// </summary>
         /// <returns>Returns the configuration page</returns>
-        public virtual async Task<IActionResult> Configure()
+        public virtual IActionResult Configure()
         {
-            return await EditStyles();
+            return EditStyles();
         }
 
         /// <summary>
         /// Gets the page showing the configuration options for the plugin
         /// </summary>
         /// <returns>Returns the configuration page</returns>
-        public virtual async Task<IActionResult> EditStyles()
+        public virtual IActionResult EditStyles()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePlugins))
             {
@@ -96,7 +95,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
         /// <returns>Returns the configuration page</returns>
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public virtual async Task<IActionResult> EditStyles(ConfigurationModel model)
+        public virtual IActionResult EditStyles(ConfigurationModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePlugins))
             {
@@ -106,7 +105,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 _notificationService.ErrorNotification(_localizationService.GetResource("Plugins.Admin.StyleEditor.Configuration.CouldNotBeSaved"));
-                return await Configure();
+                return Configure();
             }
 
             _settings.DisableCustomStyles = model.DisableCustomStyles;
@@ -119,7 +118,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Areas.Admin.Controllers
 
             _notificationService.SuccessNotification(_localizationService.GetResource("Plugins.Admin.StyleEditor.StylesUpdated"));
 
-            return await EditStyles();
+            return EditStyles();
         }
 
         #endregion
