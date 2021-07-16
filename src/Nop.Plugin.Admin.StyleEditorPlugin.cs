@@ -92,7 +92,7 @@ namespace Nop.Plugin.Admin.StyleEditor
                 ["Plugins.Admin.StyleEditor.Configuration.FormatStyles"] = "Format styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles"] = "Disable custom styles",
                 ["Plugins.Admin.StyleEditor.Configuration.DisableCustomStyles.Hint"] = "Hides the custom styles from the site",
-                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom styles",
+                ["Plugins.Admin.StyleEditor.Configuration.CustomStyles"] = "Custom CSS",
                 ["Plugins.Admin.StyleEditor.Configuration.CustomStyles.Hint"] = "The custom styles to be used in the site, written in CSS",
                 ["Plugins.Admin.StyleEditor.Configuration.RenderType"] = "Style loading type",
                 ["Plugins.Admin.StyleEditor.Configuration.RenderType.Hint"] = "How the styles should be loaded in the browser.  Inline is recommended if you only have a small number of custom styles.",
