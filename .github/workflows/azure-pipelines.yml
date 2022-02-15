@@ -26,78 +26,78 @@ variables:
   githubProjectName: 'NOP-Plugin-StyleEditor'
   build_4_30: true
 
-pool:
- vmImage: 'ubuntu-latest'
-
-steps:
-- checkout: Plugin
-- checkout: NOP_4_30
-  submodules: true
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-- checkout: NOP_4_40
-  submodules: true
-
-
-- powershell: Get-ChildItem -Path '$(Build.SourcesDirectory)' -recurse
-  displayName: 'List contents of $(Build.SourcesDirectory)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.30/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.40/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.40'
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.30/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.30
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.40/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.40
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.40'
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\$(githubProjectName)\package\uploadedItems.json' -Destination '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy manifest file'
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.30\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.30\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.40\src\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.40\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.40'
-
-- powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
-  displayName: 'List contents of $(Build.ArtifactStagingDirectory)'
-
-- task: ArchiveFiles@2
-  displayName: 'Generate zip file'
-  inputs:
-    rootFolderOrFile: $(Build.ArtifactStagingDirectory)
-    includeRootFolder: false
-    archiveFile: '$(Build.ArtifactStagingDirectory)\$(pluginSystemName)_$(Build.BuildId).zip'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish zip file'
-  inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)\$(pluginSystemName)_$(Build.BuildId).zip'
-    ArtifactName: GeneratedPackage
+jobs:
+  scipts:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - checkout: Plugin
+    - checkout: NOP_4_30
+      submodules: true
+      condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
+    - checkout: NOP_4_40
+      submodules: true
+    
+    
+    - powershell: Get-ChildItem -Path '$(Build.SourcesDirectory)' -recurse
+      displayName: 'List contents of $(Build.SourcesDirectory)'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '$(Build.SourcesDirectory)/NOP-4.30/**/*.sln'
+        arguments: '--configuration $(buildConfiguration)'
+      displayName: 'dotnet build $(buildConfiguration) - NOP 4.30'
+      condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '$(Build.SourcesDirectory)/NOP-4.40/**/*.sln'
+        arguments: '--configuration $(buildConfiguration)'
+      displayName: 'dotnet build $(buildConfiguration) - NOP 4.40'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+       command: test
+       projects: '$(Build.SourcesDirectory)/NOP-4.30/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
+      displayName: dotnet test - NOP 4.30
+      condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+       command: test
+       projects: '$(Build.SourcesDirectory)/NOP-4.40/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
+      displayName: dotnet test - NOP 4.40
+    
+    - powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)' -ItemType Directory }
+      displayName: 'Check and create directory - 4.30'
+      condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
+    
+    - powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)' -ItemType Directory }
+      displayName: 'Check and create directory - 4.40'
+    
+    - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\$(githubProjectName)\package\uploadedItems.json' -Destination '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Copy manifest file'
+    
+    - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.30\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.30\$(pluginSystemName)' -Recurse
+      displayName: 'Copy plugin - 4.30'
+      condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
+    
+    - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.40\src\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.40\$(pluginSystemName)' -Recurse
+      displayName: 'Copy plugin - 4.40'
+    
+    - powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
+      displayName: 'List contents of $(Build.ArtifactStagingDirectory)'
+    
+    - task: ArchiveFiles@2
+      displayName: 'Generate zip file'
+      inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        includeRootFolder: false
+        archiveFile: '$(Build.ArtifactStagingDirectory)\$(pluginSystemName)_$(Build.BuildId).zip'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish zip file'
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)\$(pluginSystemName)_$(Build.BuildId).zip'
+        ArtifactName: GeneratedPackage
