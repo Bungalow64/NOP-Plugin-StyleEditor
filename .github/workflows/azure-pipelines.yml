@@ -14,8 +14,10 @@ resources:
      endpoint: Bungalow64
      name: Bungalow64/NOP-Plugin-StyleEditor
 
-trigger:
-- main
+on:
+  push:
+    branches:
+      - 'main'
 
 variables:
   buildConfiguration: 'Release'
