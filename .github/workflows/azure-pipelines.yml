@@ -75,7 +75,7 @@ jobs:
     - name: List contents of ${{ github.workspace }}
       run: Get-ChildItem -Path '${{ github.workspace }}' -recurse
       shell: powershell
-      name: Generate zip file
+    - name: Generate zip file
       uses: montudor/action-zip@v0.1.0
       with:
         args: zip -qq -r ${{ github.workspace }}\${{ env.pluginSystemName }}_${{ github.run_id }}.zip ${{ github.workspace }}
