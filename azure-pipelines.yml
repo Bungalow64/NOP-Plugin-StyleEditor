@@ -112,7 +112,7 @@ steps:
   displayName: 'Copy plugin - 4.40'
   condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
 
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.50\src\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.50\$(pluginSystemName)' -Recurse
+- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.50\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.50\$(pluginSystemName)' -Recurse
   displayName: 'Copy plugin - 4.50'
 
 - powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
