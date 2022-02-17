@@ -3,7 +3,7 @@
 @{
     Layout = "_AdminLayout";
     ViewBag.PageTitle = T("Plugins.Admin.StyleEditor.EditorTitle").Text;
-    Html.SetActiveMenuItemSystemName("StyleEditor");
+    NopHtml.SetActiveMenuItemSystemName("StyleEditor");
 
     const string hideStylesBlockAttributeName = "StyleEditorPage.HideStylesBlock";
     var hideStylesBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideStylesBlockAttributeName);

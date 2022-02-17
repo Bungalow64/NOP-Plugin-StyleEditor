@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core.Infrastructure;
+using Nop.Plugin.Admin.StyleEditor.Helpers;
 
 namespace Nop.Plugin.Admin.StyleEditor.Infrastructure
 {
@@ -18,6 +19,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Infrastructure
         /// <param name="configuration"></param>
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<ICurrentDateTimeHelper, CurrentDateTimeHelper>();
+
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
