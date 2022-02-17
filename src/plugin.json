@@ -3,7 +3,7 @@
   "FriendlyName": "Style Editor",
   "SystemName": "Admin.StyleEditor",
   "Version": "1.00",
-  "SupportedVersions": [ "4.40" ],
+  "SupportedVersions": [ "4.50" ],
   "Author": "Bungalow64 Technologies",
   "DisplayOrder": 1,
   "FileName": "Nop.Plugin.Admin.StyleEditor.dll",

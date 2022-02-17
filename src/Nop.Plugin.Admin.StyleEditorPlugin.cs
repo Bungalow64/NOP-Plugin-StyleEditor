@@ -84,7 +84,7 @@ namespace Nop.Plugin.Admin.StyleEditor
                 DisableCustomStyles = false
             });
 
-            await _localizationService.AddLocaleResourceAsync(new Dictionary<string, string>
+            await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
             {
                 ["Plugins.Admin.StyleEditor.EditorTitle"] = "Style editor",
                 ["Plugins.Admin.StyleEditor.StylesUpdated"] = "The styles have been updated",
