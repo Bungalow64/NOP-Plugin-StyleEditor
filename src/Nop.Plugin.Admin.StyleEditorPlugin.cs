@@ -22,7 +22,7 @@ namespace Nop.Plugin.Admin.StyleEditor
     /// <summary>
     /// Plugin class handling install/uninstall
     /// </summary>
-    public class StyleEditorPlugin : BasePlugin, IMiscPlugin, IWidgetPlugin, IAdminMenuPlugin
+    public class StyleEditorPlugin : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
     {
         #region Fields
 
