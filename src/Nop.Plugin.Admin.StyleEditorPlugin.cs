@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
 using Nop.Core;
 using Nop.Core.Domain.Cms;
+using Nop.Plugin.Admin.StyleEditor.Components;
 using Nop.Plugin.Admin.StyleEditor.Settings;
 using Nop.Services.Cms;
 using Nop.Services.Common;
@@ -142,12 +144,12 @@ namespace Nop.Plugin.Admin.StyleEditor
         /// </summary>
         /// <param name="widgetZone">The widget zone specified</param>
         /// <returns>The name of the widget</returns>
-        public string GetWidgetViewComponentName(string widgetZone)
+        public Type GetWidgetViewComponent(string widgetZone)
         {
             return widgetZone switch
             {
-                var _ when widgetZone.Equals(PublicWidgetZones.BodyEndHtmlTagBefore) => StyleEditorPluginDefaults.WIDGETS_CUSTOM_STYLES,
-                _ => string.Empty,
+                var _ when widgetZone.Equals(PublicWidgetZones.BodyEndHtmlTagBefore) => typeof(CustomStyleComponent),
+                _ => null,
             };
         }
 
