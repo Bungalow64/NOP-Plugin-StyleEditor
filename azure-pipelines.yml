@@ -1,6 +1,10 @@
 
 resources:
  repositories:
+   - repository: NOP_4_60
+     type: github
+     endpoint: Bungalow64
+     name: Bungalow64/NOP-4.60
    - repository: NOP_4_50
      type: github
      endpoint: Bungalow64
@@ -28,6 +32,7 @@ variables:
   githubProjectName: 'NOP-Plugin-StyleEditor'
   build_4_30: true
   build_4_40: true
+  build_4_50: true
 
 pool:
  vmImage: 'ubuntu-latest'
@@ -42,10 +47,37 @@ steps:
   condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
 - checkout: NOP_4_50
   submodules: true
+  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
+- checkout: NOP_4_60
+  submodules: true
 
 
 - powershell: Get-ChildItem -Path '$(Build.SourcesDirectory)' -recurse
   displayName: 'List contents of $(Build.SourcesDirectory)'
+
+- task: UseDotNet@2
+  displayName: 'Use .NET 7 SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '7.0.x'
+
+- task: UseDotNet@2
+  displayName: 'Use .NET 3.1 Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+
+- task: UseDotNet@2
+  displayName: 'Use .NET 5 SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '5.0.x'
+
+- task: UseDotNet@2
+  displayName: 'Use .NET 6 SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -69,6 +101,14 @@ steps:
     projects: '$(Build.SourcesDirectory)/NOP-4.50/**/*.sln'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration) - NOP 4.50'
+  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(Build.SourcesDirectory)/NOP-4.60/**/*.sln'
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'dotnet build $(buildConfiguration) - NOP 4.60'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -89,6 +129,13 @@ steps:
    command: test
    projects: '$(Build.SourcesDirectory)/NOP-4.50/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
   displayName: dotnet test - NOP 4.50
+  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
+
+- task: DotNetCoreCLI@2
+  inputs:
+   command: test
+   projects: '$(Build.SourcesDirectory)/NOP-4.60/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
+  displayName: dotnet test - NOP 4.60
 
 - powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)' -ItemType Directory }
   displayName: 'Check and create directory - 4.30'
@@ -100,6 +147,10 @@ steps:
 
 - powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.50/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.50/$(pluginSystemName)' -ItemType Directory }
   displayName: 'Check and create directory - 4.50'
+  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
+
+- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.60/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.60/$(pluginSystemName)' -ItemType Directory }
+  displayName: 'Check and create directory - 4.60'
 
 - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\$(githubProjectName)\package\uploadedItems.json' -Destination '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy manifest file'
@@ -114,6 +165,10 @@ steps:
 
 - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.50\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.50\$(pluginSystemName)' -Recurse
   displayName: 'Copy plugin - 4.50'
+  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
+
+- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.60\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.60\$(pluginSystemName)' -Recurse
+  displayName: 'Copy plugin - 4.60'
 
 - powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
   displayName: 'List contents of $(Build.ArtifactStagingDirectory)'
