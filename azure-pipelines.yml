@@ -34,10 +34,10 @@ variables:
   pluginFolder: 'Nop.Plugin.Admin.StyleEditor'
   pluginSystemName: 'Admin.StyleEditor'
   githubProjectName: 'NOP-Plugin-StyleEditor'
-  build_4_30: true
-  build_4_40: true
-  build_4_50: true
-  build_4_60: true
+  build_4_30: false
+  build_4_40: false
+  build_4_50: false
+  build_4_60: false
 
 pool:
  vmImage: 'ubuntu-latest'
