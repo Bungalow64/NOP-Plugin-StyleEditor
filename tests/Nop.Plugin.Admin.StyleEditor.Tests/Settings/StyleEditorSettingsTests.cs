@@ -18,7 +18,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
         {
             var settings = new StyleEditorSettings();
 
-            Assert.Throws<ArgumentNullException>(() => settings.UpdateVersion(null));
+            ClassicAssert.Throws<ArgumentNullException>(() => settings.UpdateVersion(null));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
             settings.UpdateVersion(currentDateTimeHelper.Object);
             var version2 = settings.Version;
 
-            Assert.AreNotEqual(version1, version2);
+            ClassicAssert.AreNotEqual(version1, version2);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
             settings.UpdateVersion(currentDateTimeHelper.Object);
             var version1 = settings.Version;
 
-            Assert.AreEqual("/CustomStyle?v=637502724000000000", settings.CustomStylesPath);
+            ClassicAssert.AreEqual("/CustomStyle?v=637502724000000000", settings.CustomStylesPath);
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
 
             var (view, model) = settings.GenerateView();
 
-            Assert.IsNull(view);
-            Assert.IsNull(model);
+            ClassicAssert.IsNull(view);
+            ClassicAssert.IsNull(model);
         }
 
         [Test]
@@ -102,8 +102,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
 
             var (view, model) = settings.GenerateView();
 
-            Assert.IsNull(view);
-            Assert.IsNull(model);
+            ClassicAssert.IsNull(view);
+            ClassicAssert.IsNull(model);
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
 
             var (view, model) = settings.GenerateView();
 
-            Assert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", view);
-            Assert.AreEqual("h1{color:red;}", model);
+            ClassicAssert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStyles.cshtml", view);
+            ClassicAssert.AreEqual("h1{color:red;}", model);
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
 
             var (view, model) = settings.GenerateView();
 
-            Assert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStylesLink.cshtml", view);
-            Assert.AreEqual($"/CustomStyle?v=100001", model);
+            ClassicAssert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStylesLink.cshtml", view);
+            ClassicAssert.AreEqual($"/CustomStyle?v=100001", model);
         }
 
         [Test]
@@ -157,8 +157,8 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Settings
 
             var (view, model) = settings.GenerateView();
 
-            Assert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStylesAsync.cshtml", view);
-            Assert.AreEqual($"/CustomStyle?v=100001", model);
+            ClassicAssert.AreEqual("~/Plugins/Admin.StyleEditor/Views/CustomStylesAsync.cshtml", view);
+            ClassicAssert.AreEqual($"/CustomStyle?v=100001", model);
         }
     }
 }

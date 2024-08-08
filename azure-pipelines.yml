@@ -45,18 +45,28 @@ pool:
 steps:
 - checkout: Plugin
 - checkout: NOP_4_30
+  clean: true
+  fetchDepth: 1
   submodules: true
   condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
 - checkout: NOP_4_40
+  clean: true
+  fetchDepth: 1
   submodules: true
   condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
 - checkout: NOP_4_50
+  clean: true
+  fetchDepth: 1
   submodules: true
   condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
 - checkout: NOP_4_60
+  clean: true
+  fetchDepth: 1
   submodules: true
   condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
 - checkout: NOP_4_70
+  clean: true
+  fetchDepth: 1
   submodules: true
 
 
