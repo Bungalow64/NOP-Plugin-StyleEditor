@@ -123,6 +123,7 @@ steps:
     projects: '$(Build.SourcesDirectory)/NOP-4.60/**/*.sln'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration) - NOP 4.60'
+  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
 
 - task: DotNetCoreCLI@2
   inputs:
