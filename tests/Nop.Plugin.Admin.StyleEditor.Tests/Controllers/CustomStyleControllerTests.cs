@@ -42,12 +42,12 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Controllers
 
             var result = Create().Index();
 
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<ContentResult>(result);
+            ClassicAssert.NotNull(result);
+            ClassicAssert.IsInstanceOf<ContentResult>(result);
             var castResult = (ContentResult)result;
 
-            Assert.AreEqual(string.Empty, castResult.Content);
-            Assert.AreEqual("text/css", castResult.ContentType);
+            ClassicAssert.AreEqual(string.Empty, castResult.Content);
+            ClassicAssert.AreEqual("text/css", castResult.ContentType);
         }
 
         [Test]
@@ -55,12 +55,12 @@ namespace Nop.Plugin.Admin.StyleEditor.Tests.Controllers
         {
             var result = Create().Index();
 
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<ContentResult>(result);
+            ClassicAssert.NotNull(result);
+            ClassicAssert.IsInstanceOf<ContentResult>(result);
             var castResult = (ContentResult)result;
 
-            Assert.AreEqual("h1{color:red;}", castResult.Content);
-            Assert.AreEqual("text/css", castResult.ContentType);
+            ClassicAssert.AreEqual("h1{color:red;}", castResult.Content);
+            ClassicAssert.AreEqual("text/css", castResult.ContentType);
         }
     }
 }
