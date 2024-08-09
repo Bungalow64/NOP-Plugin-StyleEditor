@@ -1,4 +1,3 @@
-
 resources:
  repositories:
    - repository: NOP_4_70
@@ -34,44 +33,39 @@ variables:
   pluginFolder: 'Nop.Plugin.Admin.StyleEditor'
   pluginSystemName: 'Admin.StyleEditor'
   githubProjectName: 'NOP-Plugin-StyleEditor'
-  build_4_30: false
-  build_4_40: false
-  build_4_50: false
-  build_4_60: false
+  build_4_30: true
+  build_4_40: true
+  build_4_50: true
+  build_4_60: true
+  build_4_70: true
 
 pool:
  vmImage: 'ubuntu-latest'
 
 steps:
 - checkout: Plugin
+  clean: true
+  fetchDepth: 1
 - checkout: NOP_4_30
   clean: true
   fetchDepth: 1
   submodules: true
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
 - checkout: NOP_4_40
   clean: true
   fetchDepth: 1
   submodules: true
-  condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
 - checkout: NOP_4_50
   clean: true
   fetchDepth: 1
   submodules: true
-  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
 - checkout: NOP_4_60
   clean: true
   fetchDepth: 1
   submodules: true
-  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
 - checkout: NOP_4_70
   clean: true
   fetchDepth: 1
   submodules: true
-
-
-- powershell: Get-ChildItem -Path '$(Build.SourcesDirectory)' -recurse
-  displayName: 'List contents of $(Build.SourcesDirectory)'
   
 - task: UseDotNet@2
   displayName: 'Use .NET 8 SDK'
@@ -102,120 +96,49 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.0.x'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.30/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.40/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.40'
-  condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.50/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.50'
-  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.60/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.60'
-  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)/NOP-4.70/**/*.sln'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration) - NOP 4.70'
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.30/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.30
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.40/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.40
-  condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.50/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.50
-  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.60/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.60
-  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: test
-   projects: '$(Build.SourcesDirectory)/NOP-4.70/**/CustomPlugins/$(pluginFolder)/**/*.Tests.csproj'
-  displayName: dotnet test - NOP 4.70
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.30/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.40/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.40'
-  condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.50/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.50/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.50'
-  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.60/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.60/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.60'
-  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
-
-- powershell: If (!(Test-Path '$(Build.ArtifactStagingDirectory)/4.70/$(pluginSystemName)')) { New-Item -Path '$(Build.ArtifactStagingDirectory)/4.70/$(pluginSystemName)' -ItemType Directory }
-  displayName: 'Check and create directory - 4.70'
-
+    
 - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\$(githubProjectName)\package\uploadedItems.json' -Destination '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy manifest file'
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.30\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.30\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.30'
-  condition: and(succeeded(), eq('${{ variables.build_4_30 }}', true))
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.40\src\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.40\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.40'
-  condition: and(succeeded(), eq('${{ variables.build_4_40 }}', true))
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.50\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.50\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.50'
-  condition: and(succeeded(), eq('${{ variables.build_4_50 }}', true))
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.60\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.60\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.60'
-  condition: and(succeeded(), eq('${{ variables.build_4_60 }}', true))
-
-- powershell: Copy-Item -Path '$(Build.SourcesDirectory)\NOP-4.70\Presentation\Nop.Web\Plugins\$(pluginSystemName)\*' -Destination '$(Build.ArtifactStagingDirectory)\4.70\$(pluginSystemName)' -Recurse
-  displayName: 'Copy plugin - 4.70'
+ 
+- ${{ if eq(variables['build_4_30'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.30'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
+        
+- ${{ if eq(variables['build_4_40'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.40'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: '\src'
+        
+- ${{ if eq(variables['build_4_50'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.50'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
+        
+- ${{ if eq(variables['build_4_60'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.60'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
+        
+- ${{ if eq(variables['build_4_70'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.70'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
 
 - powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
   displayName: 'List contents of $(Build.ArtifactStagingDirectory)'

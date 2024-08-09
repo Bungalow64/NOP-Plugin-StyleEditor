@@ -1,0 +1,39 @@
+parameters:
+  - name: version
+    type: string
+  - name: pluginFolder
+    type: string
+  - name: pluginSystemName
+    type: string
+  - name: subfolder
+    type: string
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(Build.SourcesDirectory)/NOP-${{ parameters.version }}/**/*.sln'
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'dotnet build $(buildConfiguration) - NOP ${{ parameters.version }}'
+
+- task: DotNetCoreCLI@2
+  inputs:
+   command: test
+   projects: '$(Build.SourcesDirectory)/NOP-${{ parameters.version }}/**/CustomPlugins/${{ parameters.pluginFolder }}/**/*.Tests.csproj'
+  displayName: 'dotnet test - NOP ${{ parameters.version }}'
+
+- powershell: |
+    If (!(Test-Path '$(Build.ArtifactStagingDirectory)/${{ parameters.version }}/${{ parameters.pluginSystemName }}')) {
+        New-Item -Path '$(Build.ArtifactStagingDirectory)/${{ parameters.version }}/${{ parameters.pluginSystemName }}' -ItemType Directory
+    }
+  displayName: 'Check and create directory - ${{ parameters.version }}'
+  
+- powershell: Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -recurse
+  displayName: 'List contents of $(Build.ArtifactStagingDirectory)'
+
+- powershell: |
+    Copy-Item -Path '$(Build.SourcesDirectory)\NOP-${{ parameters.version }}${{ parameters.subfolder }}\Presentation\Nop.Web\Plugins\${{ parameters.pluginSystemName }}\*' -Destination '$(Build.ArtifactStagingDirectory)\${{ parameters.version }}\${{ parameters.pluginSystemName }}' -Recurse
+  displayName: 'Copy plugin - ${{ parameters.version }}'
+
+- powershell: Remove-Item -Recurse -Force $(Build.SourcesDirectory)\NOP-${{ parameters.version }}
+  displayName: 'Clean up NOP-${{ parameters.version }}'
