@@ -43,9 +43,9 @@ variables:
   githubProjectName: 'NOP-Plugin-StyleEditor'
   build_4_30: false
   build_4_40: false
-  build_4_50: true
-  build_4_60: true
-  build_4_70: true
+  build_4_50: false
+  build_4_60: false
+  build_4_70: false
   build_4_80: true
   build_4_90: true
 
@@ -56,34 +56,41 @@ steps:
 - checkout: Plugin
   clean: true
   fetchDepth: 1
-- checkout: NOP_4_30
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_40
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_50
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_60
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_70
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_80
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_90
-  clean: true
-  fetchDepth: 1
-  submodules: true
+- ${{ if eq(variables['build_4_30'], true) }}:
+  - checkout: NOP_4_30
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_40'], true) }}:
+  - checkout: NOP_4_40
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_50'], true) }}:
+  - checkout: NOP_4_50
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_60'], true) }}:
+  - checkout: NOP_4_60
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_70'], true) }}:
+  - checkout: NOP_4_70
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_80'], true) }}:
+  - checkout: NOP_4_80
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_90'], true) }}:
+  - checkout: NOP_4_90
+    clean: true
+    fetchDepth: 1
+    submodules: true
   
 - task: UseDotNet@2
   displayName: 'Use .NET 9 SDK'
