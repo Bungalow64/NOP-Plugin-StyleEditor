@@ -1,5 +1,9 @@
 resources:
  repositories:
+   - repository: NOP_4_90
+     type: github
+     endpoint: Bungalow64
+     name: Bungalow64/NOP-4.90
    - repository: NOP_4_70
      type: github
      endpoint: Bungalow64
@@ -43,6 +47,7 @@ variables:
   build_4_60: true
   build_4_70: true
   build_4_80: true
+  build_4_90: true
 
 pool:
  vmImage: 'ubuntu-latest'
@@ -72,6 +77,10 @@ steps:
   fetchDepth: 1
   submodules: true
 - checkout: NOP_4_80
+  clean: true
+  fetchDepth: 1
+  submodules: true
+- checkout: NOP_4_90
   clean: true
   fetchDepth: 1
   submodules: true
@@ -159,6 +168,14 @@ steps:
     - template: build-step.yml
       parameters:
         version: '4.80'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
+        
+- ${{ if eq(variables['build_4_90'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.90'
         pluginFolder: ${{ variables.pluginFolder }}
         pluginSystemName: ${{ variables.pluginSystemName }}
         subfolder: ''
