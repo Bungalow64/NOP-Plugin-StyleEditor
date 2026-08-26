@@ -1,5 +1,9 @@
 resources:
  repositories:
+   - repository: NOP_4_90
+     type: github
+     endpoint: Bungalow64
+     name: Bungalow64/NOP-4.90
    - repository: NOP_4_70
      type: github
      endpoint: Bungalow64
@@ -39,10 +43,11 @@ variables:
   githubProjectName: 'NOP-Plugin-StyleEditor'
   build_4_30: false
   build_4_40: false
-  build_4_50: true
-  build_4_60: true
-  build_4_70: true
+  build_4_50: false
+  build_4_60: false
+  build_4_70: false
   build_4_80: true
+  build_4_90: true
 
 pool:
  vmImage: 'ubuntu-latest'
@@ -51,30 +56,41 @@ steps:
 - checkout: Plugin
   clean: true
   fetchDepth: 1
-- checkout: NOP_4_30
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_40
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_50
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_60
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_70
-  clean: true
-  fetchDepth: 1
-  submodules: true
-- checkout: NOP_4_80
-  clean: true
-  fetchDepth: 1
-  submodules: true
+- ${{ if eq(variables['build_4_30'], true) }}:
+  - checkout: NOP_4_30
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_40'], true) }}:
+  - checkout: NOP_4_40
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_50'], true) }}:
+  - checkout: NOP_4_50
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_60'], true) }}:
+  - checkout: NOP_4_60
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_70'], true) }}:
+  - checkout: NOP_4_70
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_80'], true) }}:
+  - checkout: NOP_4_80
+    clean: true
+    fetchDepth: 1
+    submodules: true
+- ${{ if eq(variables['build_4_90'], true) }}:
+  - checkout: NOP_4_90
+    clean: true
+    fetchDepth: 1
+    submodules: true
   
 - task: UseDotNet@2
   displayName: 'Use .NET 9 SDK'
@@ -82,35 +98,41 @@ steps:
     packageType: 'sdk'
     version: '9.0.x'
   
-- task: UseDotNet@2
-  displayName: 'Use .NET 8 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '8.0.x'
+- ${{ if eq(variables['build_4_70'], true) }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET 7 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '7.0.x'
+- ${{ if eq(variables['build_4_60'], true) }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 7 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '7.0.x'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET 3.1 Core SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.x'
+- ${{ if eq(variables['build_4_30'], true) }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 3.1 Core SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.x'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET 5 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '5.0.x'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET 6 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '6.0.x'
+- ${{ if eq(variables['build_4_40'], true) }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 5 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '5.0.x'
+
+- ${{ if eq(variables['build_4_50'], true) }}:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 6 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '6.0.x'
     
 - powershell: Copy-Item -Path '$(Build.SourcesDirectory)\$(githubProjectName)\package\uploadedItems.json' -Destination '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy manifest file'
@@ -159,6 +181,14 @@ steps:
     - template: build-step.yml
       parameters:
         version: '4.80'
+        pluginFolder: ${{ variables.pluginFolder }}
+        pluginSystemName: ${{ variables.pluginSystemName }}
+        subfolder: ''
+        
+- ${{ if eq(variables['build_4_90'], true) }}:
+    - template: build-step.yml
+      parameters:
+        version: '4.90'
         pluginFolder: ${{ variables.pluginFolder }}
         pluginSystemName: ${{ variables.pluginSystemName }}
         subfolder: ''

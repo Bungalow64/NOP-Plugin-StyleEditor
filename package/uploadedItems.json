@@ -34,5 +34,11 @@
     "SupportedVersion": "4.80",
     "DirectoryPath": "4.80/Admin.StyleEditor/",
     "SystemName": "Admin.StyleEditor"
+  },
+  {
+    "Type": "Plugin",
+    "SupportedVersion": "4.90",
+    "DirectoryPath": "4.90/Admin.StyleEditor/",
+    "SystemName": "Admin.StyleEditor"
   }
 ]
